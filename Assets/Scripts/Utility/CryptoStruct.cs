@@ -1,11 +1,11 @@
-public class CryptoStruct
+using UnityEngine;
+
+[CreateAssetMenu(menuName = "Cryptos/Crypto")]
+public class CryptoStruct : ScriptableObject
 {
     public string Name;
-    public int Price;
-
-    public CryptoStruct(string name, int price)
-    {
-        Name = name;
-        Price = price;
-    }
+    public int currentPrice;
+    public int minPrice;
+    public int maxPrice;
+    
 }
