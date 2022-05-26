@@ -5,18 +5,34 @@ using UnityEngine.UI;
 
 public class BuyAndSellManager : Singleton<BuyAndSellManager>
 {
+    [SerializeField] private GameObject backGroundPanel;
+    
     [SerializeField] private GameObject buyAndSellPanel;
+
+    [SerializeField] private Text buyAndSellText;
+    
+    [SerializeField] private GameObject buyPanel;
+    
+    [SerializeField] private GameObject sellPanel;
 
     [SerializeField] private Button buyButton;
 
     [SerializeField] private Button sellButton;
 
-    [SerializeField] private Text amountDisplay;
+    [SerializeField] private Text buyAmountDisplay;
 
-    [SerializeField] private Slider amountSlider;
+    [SerializeField] private Text sellAmountDisplay;
 
-    [SerializeField] private Text displayText;
+    [SerializeField] private Slider buyAmountSlider;
+   
+    [SerializeField] private Slider sellAmountSlider;
+    
+    [SerializeField] private Text buyDisplayText;
+    
+    [SerializeField] private Text sellDisplayText;
 
+    private string activeCryptoName;
+    private int activeCryptoPrice;
     
     // Start is called before the first frame update
     void Start()
@@ -24,17 +40,74 @@ public class BuyAndSellManager : Singleton<BuyAndSellManager>
         buyAndSellPanel.SetActive(false);
     }
 
-    public void ShowPanel(string cryptoName, int cryptoPrice, int maxAmount)
+    public void ShowBuyOrSellPanel(string cryptoName, int cryptoPrice)
     {
-        displayText.text = cryptoName + " " + cryptoPrice;
-        ChangeAmountValue(maxAmount);
-        amountSlider.maxValue = maxAmount;
-        amountSlider.minValue = 1;
-        amountSlider.value = maxAmount;
+        activeCryptoName = cryptoName;
+        activeCryptoPrice = cryptoPrice;
+        backGroundPanel.SetActive(true);
+        buyAndSellPanel.SetActive(true);
+        buyAndSellText.text = cryptoName + " " + cryptoPrice;
     }
 
-    public void ChangeAmountValue(int amount)
+    public void ShowBuyPanel()
     {
-        amountDisplay.text = amount.ToString();
+        buyAndSellPanel.SetActive(false);
+        buyPanel.SetActive(true);
+        buyDisplayText.text = activeCryptoName + " " + activeCryptoPrice;
+        buyAmountSlider.maxValue = EconomyManager.Instance.GetPlayerAmountCapacity(activeCryptoPrice);
+        buyAmountSlider.value = buyAmountSlider.maxValue;
+        ChangeAmountValue(buyAmountSlider.value);
+    }
+    
+    public void ShowSellPanel()
+    {
+        buyAndSellPanel.SetActive(false);
+        sellPanel.SetActive(true);
+        sellDisplayText.text = activeCryptoName + " " + activeCryptoPrice;
+        sellAmountSlider.maxValue = PlayerInventory.Instance.GetAmount(activeCryptoName);
+        sellAmountSlider.value = sellAmountSlider.maxValue;
+        ChangeAmountValue(sellAmountSlider.value);
+    }
+
+    public void ChangeAmountValue(float value)
+    {
+        buyAmountDisplay.text = value.ToString();
+        sellAmountDisplay.text = value.ToString();
+    }
+
+    public void BuyOperation()
+    {
+        CryptoStruct temp = CryptoStruct.CreateInstance<CryptoStruct>();
+        temp.Name = activeCryptoName;
+        temp.currentPrice = activeCryptoPrice;
+        for (int i = 0; i < buyAmountSlider.value; i++)
+        {
+            PlayerInventory.Instance.AddCrypto(temp);
+        }
+        EconomyManager.Instance.ModifyPlayerCash(-(int)(activeCryptoPrice* buyAmountSlider.value));
+        EconomyManager.Instance.UpdateCryptoHolders();
+
+        CloseWindow();
+    }
+
+    public void SellOperation()
+    {
+        for (int i = 0; i < sellAmountSlider.value; i++)
+        {
+            PlayerInventory.Instance.RemoveCrypto(activeCryptoName);
+        }
+        EconomyManager.Instance.ModifyPlayerCash((int)(activeCryptoPrice*sellAmountSlider.value));
+        EconomyManager.Instance.UpdateCryptoHolders();
+
+        CloseWindow();
+    }
+    
+
+    public void CloseWindow()
+    {
+        backGroundPanel.SetActive(false);
+        buyAndSellPanel.SetActive(false);
+        buyPanel.SetActive(false);
+        sellPanel.SetActive(false);
     }
 }

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,7 +13,11 @@ public class InGameUIManager : Singleton<InGameUIManager>
     [SerializeField] private Text currentDay;
 
     [SerializeField] private Text remainDays;
+
+    [SerializeField] private CryptoHolders[] holders;
     // Start is called before the first frame update
+    
+
     void Start()
     {
         EconomyManager.Instance.OnCashChange += UpdateCash;
@@ -22,17 +27,22 @@ public class InGameUIManager : Singleton<InGameUIManager>
 
     private void UpdateCash(int amout)
     {
-        cashDisplay.text = amout.ToString();
+        cashDisplay.text = "Dinero: " + amout.ToString();
     }
 
     private void UpdateDept(int amount)
     {
-        deptDisplay.text = amount.ToString();
+        deptDisplay.text = "Deuda: " + amount.ToString();
     }
 
     private void UpdateDays(int current)
     {
-        currentDay.text = current.ToString();
-        remainDays.text = (30 - current).ToString();
+        currentDay.text = "Dia actual: " + current.ToString();
+        remainDays.text = "Restantes: " + (30 - current).ToString();
+    }
+
+    public void UpdateHolder(int holderPosition,string cryptoName, int playerAmount, int price)
+    {
+        holders[holderPosition].AsigneValues(cryptoName,price,playerAmount);
     }
 }

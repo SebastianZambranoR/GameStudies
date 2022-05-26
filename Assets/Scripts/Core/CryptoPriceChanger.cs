@@ -8,12 +8,38 @@ public class CryptoPriceChanger : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        EconomyManager.Instance.OnDayChange += UpdateCryptoValues;
     }
 
-    // Update is called once per frame
-    void Update()
+    void UpdateCryptoValues(int day)
     {
-        
+        if (day % 3 == 1)
+        {
+            foreach (var cry in cryptos)
+            {
+                cry.currentPrice = Random.Range(cry.minPrice, cry.maxPrice);
+
+            }
+        }
+        else
+        {
+            foreach (var cry in cryptos)
+            {
+                cry.currentPrice = Random.Range(cry.currentPrice - 100, cry.currentPrice + 100);
+
+            }
+        }
+    }
+
+    public void NewsCryptoValueChange(string cryptoName, int value)
+    {
+        for (int i = 0; i < cryptos.Length; i++)
+        {
+            if (cryptos[i].Name == cryptoName)
+            {
+                cryptos[i].currentPrice = value;
+                break;
+            }
+        }
     }
 }

@@ -23,9 +23,8 @@ public class EconomyManager : Singleton<EconomyManager>
     [SerializeField] private int startingPlayerDebt;
     
     [SerializeField] private int dailyTaxes;
-
-
     
+    private CryptoPriceChanger priceChanger;
     
     public int CurrentDay => currentDay;
 
@@ -41,10 +40,31 @@ public class EconomyManager : Singleton<EconomyManager>
     // Start is called before the first frame update
     void Start()
     {
+        priceChanger = GetComponent<CryptoPriceChanger>();
+        StartGame();
+    }
+    
+    
+
+    void StartGame()
+    {
         currentDay = 1;
         OnDayChange?.Invoke(currentDay);
         currentPlayerCash = startinPlayerCash;
         currentPlayerDebt = startingPlayerDebt;
+        OnCashChange?.Invoke(currentPlayerCash);
+        OnDebtChange?.Invoke(currentPlayerDebt);
+        UpdateCryptoHolders();
+    }
+
+    public void UpdateCryptoHolders()
+    {
+        for (int i = 0; i < priceChanger.cryptos.Length; i++)
+        {
+            //Asignar posteriormente el inventario del jugador
+            InGameUIManager.Instance.UpdateHolder(i,priceChanger.cryptos[i].Name,PlayerInventory.Instance.GetAmount(priceChanger.cryptos[i].Name),
+                priceChanger.cryptos[i].currentPrice);
+        }
     }
 
     public void ModifyPlayerCash(int amount)
@@ -67,11 +87,12 @@ public class EconomyManager : Singleton<EconomyManager>
         {
             ModifyPlayerDept((currentPlayerDebt * dailyTaxes) / 100);
         }
+        UpdateCryptoHolders();
     }
 
     public int GetPlayerAmountCapacity(int price)
     {
-        float amount = currentPlayerCash / price;
+        float amount = (float)currentPlayerCash / price;
         return Mathf.FloorToInt(amount);
     }
 }

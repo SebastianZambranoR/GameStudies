@@ -17,12 +17,41 @@ public class CryptoHolders : MonoBehaviour
         cryptoPriceDisplay.text = cryptoPrice.ToString();
         playerAmountDisplay.text = playerAmount.ToString();
         selecCrypto.onClick.AddListener(TradeActive);
+        if (cryptoPrice > EconomyManager.Instance.CurrentPlayerCash && PlayerInventory.Instance.GetAmount(cryptoName) < 1)
+        {
+            selecCrypto.interactable = false;
+            cryptoNameDisplay.color = selecCrypto.colors.disabledColor;
+            cryptoPriceDisplay.color = selecCrypto.colors.disabledColor;
+        }
+        else
+        {
+            selecCrypto.interactable = true;
+            cryptoNameDisplay.color = Color.black;
+            cryptoPriceDisplay.color = Color.black;
+        }
     }
 
     public void TradeActive()
     {
-        BuyAndSellManager.Instance.ShowPanel(cryptoNameDisplay.text, int.Parse(cryptoPriceDisplay.text),
-            EconomyManager.Instance.GetPlayerAmountCapacity(int.Parse(cryptoPriceDisplay.text)));
+        if (PlayerInventory.Instance.GetAmount(cryptoNameDisplay.text) > 0)
+        {
+            if (EconomyManager.Instance.CurrentPlayerCash >= int.Parse(cryptoPriceDisplay.text))
+            {
+                BuyAndSellManager.Instance.ShowBuyOrSellPanel(cryptoNameDisplay.text, int.Parse(cryptoPriceDisplay.text));
+            }
+            else
+            {
+                BuyAndSellManager.Instance.ShowBuyOrSellPanel(cryptoNameDisplay.text, int.Parse(cryptoPriceDisplay.text));
+                BuyAndSellManager.Instance.ShowSellPanel();
+            }
+        }
+        else
+        {
+            BuyAndSellManager.Instance.ShowBuyOrSellPanel(cryptoNameDisplay.text, int.Parse(cryptoPriceDisplay.text));
+            BuyAndSellManager.Instance.ShowBuyPanel();
+
+        }
+
     }
     
     
