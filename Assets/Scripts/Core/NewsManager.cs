@@ -7,6 +7,7 @@ public class NewsManager : Singleton<NewsManager>
     private CryptoStruct crypto;
     [SerializeField] private string[] positiveNews;
     [SerializeField] private string[] negativeNews;
+    [SerializeField] private string[] hackNews;
     private bool active;
 
     private int upOrDown;
@@ -40,14 +41,17 @@ public class NewsManager : Singleton<NewsManager>
             EconomyManager.Instance.OnDayChange += ApplyEffects;
             Debug.Log("noticia generada");
             Debug.Log("Crypto a alterar " + crypto.Name);
-            upOrDown = Random.Range(0,2);
-            if (upOrDown == 0)
+            upOrDown = Random.Range(0,101);
+            if (upOrDown < 30)
             {
                 NewsDisplay.Instance.SetText(positiveNews[Random.Range(0,3)] + crypto.Name);
             }
-            else
+            else if(upOrDown >30 && upOrDown < 70)
             {
                 NewsDisplay.Instance.SetText(negativeNews[Random.Range(0,3)] + crypto.Name);
+            }else if (upOrDown >70)
+            {
+                NewsDisplay.Instance.SetText(hackNews[Random.Range(0,3)]);
             }
             active = true;
         }
@@ -66,11 +70,14 @@ public class NewsManager : Singleton<NewsManager>
                 crypto.minPrice = (int)(crypto.currentPrice * 0.6f);
                 crypto.maxPrice = (int)(crypto.currentPrice * 2f);
             }
-            else
+            else if(upOrDown >30 && upOrDown < 70)
             {
                 crypto.currentPrice -= (crypto.currentPrice * randomPorcentaje) / 100;
                 crypto.minPrice = (int)(crypto.currentPrice * 0.6f);
                 crypto.maxPrice = (int)(crypto.currentPrice * 1.7f);
+            }else if (upOrDown > 70)
+            {
+                HackManager.Instance.PrepareHackAttack();
             }
 
 
