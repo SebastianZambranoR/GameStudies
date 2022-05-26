@@ -15,7 +15,6 @@ public class PlayerInventory : Singleton<PlayerInventory>
 
     public void RemoveCrypto(string crypto)
     {
-        Debug.Log(crypto);
         for (int i = inventory.Count-1; i == 0; i--)
         {
             if (inventory[i].Name == crypto)
@@ -38,4 +37,20 @@ public class PlayerInventory : Singleton<PlayerInventory>
         return amount;
     }
 
+    public int GetPreviousValue(string cryptoName)
+    {
+        int price = 0;
+        for (int i = 0; i < inventory.Count; i++)
+        {
+            if (inventory[i].Name == cryptoName)
+            {
+                price = inventory[i].currentPrice;
+                break;
+            }
+
+        }
+
+        return price;
+    }
+    
 }

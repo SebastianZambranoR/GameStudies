@@ -31,6 +31,8 @@ public class BuyAndSellManager : Singleton<BuyAndSellManager>
     
     [SerializeField] private Text sellDisplayText;
 
+    [SerializeField] private Text sellPreviosValue;
+
     private string activeCryptoName;
     private int activeCryptoPrice;
     
@@ -67,6 +69,7 @@ public class BuyAndSellManager : Singleton<BuyAndSellManager>
         sellAmountSlider.maxValue = PlayerInventory.Instance.GetAmount(activeCryptoName);
         sellAmountSlider.value = sellAmountSlider.maxValue;
         ChangeAmountValue(sellAmountSlider.value);
+        sellPreviosValue.text = "Comprado por: " + PlayerInventory.Instance.GetPreviousValue(activeCryptoName);
     }
 
     public void ChangeAmountValue(float value)
