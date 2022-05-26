@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Shiba Koin
   m_EditorClassIdentifier: 
   Name: Shiba Koin
-  currentPrice: 2835
+  currentPrice: 0
   minPrice: 900
   maxPrice: 3000

@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Cardana
   m_EditorClassIdentifier: 
   Name: Cardana
-  currentPrice: 454
+  currentPrice: 0
   minPrice: 350
   maxPrice: 800

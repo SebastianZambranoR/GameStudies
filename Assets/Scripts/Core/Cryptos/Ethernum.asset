@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Ethernum
   m_EditorClassIdentifier: 
   Name: Ethernum
-  currentPrice: 873
+  currentPrice: 0
   minPrice: 800
   maxPrice: 2200

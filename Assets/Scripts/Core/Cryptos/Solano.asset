@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Solano
   m_EditorClassIdentifier: 
   Name: Solano
-  currentPrice: 923
+  currentPrice: 0
   minPrice: 400
   maxPrice: 1200
