@@ -19,7 +19,7 @@ public class FinishGame : MonoBehaviour
     {
         int playerTotal = EconomyManager.Instance.GetPlayerTotal();
 
-        if (playerTotal >= 1000000)
+        if (playerTotal >= 100000)
         {
             finalPanel.SetActive(true);
             finalText.text = "¡Felicidades!, lo has logrado, te has convertido en un trader exitoso";
