@@ -25,19 +25,22 @@ public class CryptoPriceChanger : MonoBehaviour
         {
             foreach (var cry in cryptos)
             {
-                cry.currentPrice = Random.Range(cry.currentPrice - 100, cry.currentPrice + 100);
+                cry.currentPrice = Random.Range((cry.currentPrice*80)/100, (cry.currentPrice*120)/100);
 
             }
         }
     }
 
-    public void NewsCryptoValueChange(string cryptoName, int value)
+    public void NewsCryptoValueChange(CryptoStruct crypto)
     {
+        Debug.Log("crypto modificada");
         for (int i = 0; i < cryptos.Length; i++)
         {
-            if (cryptos[i].Name == cryptoName)
+            if (cryptos[i].Name == crypto.Name)
             {
-                cryptos[i].currentPrice = value;
+                cryptos[i].currentPrice = crypto.currentPrice;
+                cryptos[i].minPrice = crypto.minPrice;
+                cryptos[i].maxPrice = crypto.maxPrice;
                 break;
             }
         }

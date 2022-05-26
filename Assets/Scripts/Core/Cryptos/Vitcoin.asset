@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Vitcoin
   m_EditorClassIdentifier: 
   Name: Vitcoin
-  currentPrice: 25833
-  minPrice: 14000
-  maxPrice: 30000
+  currentPrice: 1859
+  minPrice: 1741
+  maxPrice: 4933

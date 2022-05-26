@@ -67,6 +67,12 @@ public class EconomyManager : Singleton<EconomyManager>
         }
     }
 
+    public CryptoStruct GetRandomCrypto()
+    {
+        int rand = UnityEngine.Random.Range(0, 8);
+        return priceChanger.cryptos[rand];
+    }
+
     public void ModifyPlayerCash(int amount)
     {
         currentPlayerCash += amount;
@@ -94,5 +100,11 @@ public class EconomyManager : Singleton<EconomyManager>
     {
         float amount = (float)currentPlayerCash / price;
         return Mathf.FloorToInt(amount);
+    }
+
+    public void NewsEffets(CryptoStruct crypto)
+    {
+        priceChanger.NewsCryptoValueChange(crypto);
+        UpdateCryptoHolders();
     }
 }

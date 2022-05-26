@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Doge Koin
   m_EditorClassIdentifier: 
   Name: Doge Koin
-  currentPrice: 612
+  currentPrice: 1020
   minPrice: 600
   maxPrice: 1500
