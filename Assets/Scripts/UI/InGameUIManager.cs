@@ -20,6 +20,11 @@ public class InGameUIManager : Singleton<InGameUIManager>
 
     void Start()
     {
+
+    }
+
+    public void Initialize()
+    {
         EconomyManager.Instance.OnCashChange += UpdateCash;
         EconomyManager.Instance.OnDebtChange += UpdateDept;
         EconomyManager.Instance.OnDayChange += UpdateDays;

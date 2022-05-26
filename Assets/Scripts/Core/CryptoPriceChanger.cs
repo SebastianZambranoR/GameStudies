@@ -6,7 +6,8 @@ public class CryptoPriceChanger : MonoBehaviour
 {
     [SerializeField] public CryptoStruct[] cryptos;
     // Start is called before the first frame update
-    void Start()
+
+    public void Initialize()
     {
         EconomyManager.Instance.OnDayChange += UpdateCryptoValues;
     }

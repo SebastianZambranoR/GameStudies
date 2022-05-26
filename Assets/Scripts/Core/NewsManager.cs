@@ -44,13 +44,16 @@ public class NewsManager : Singleton<NewsManager>
             upOrDown = Random.Range(0,101);
             if (upOrDown < 30)
             {
+                AudioSource.PlayClipAtPoint(Audios.Instance.sonidoEventos, transform.position);
                 NewsDisplay.Instance.SetText(positiveNews[Random.Range(0,3)] + crypto.Name);
             }
             else if(upOrDown >30 && upOrDown < 70)
             {
+                AudioSource.PlayClipAtPoint(Audios.Instance.sonidoEventos, transform.position);
                 NewsDisplay.Instance.SetText(negativeNews[Random.Range(0,3)] + crypto.Name);
             }else if (upOrDown >70)
             {
+                AudioSource.PlayClipAtPoint(Audios.Instance.sonidoEventos, transform.position);
                 NewsDisplay.Instance.SetText(hackNews[Random.Range(0,3)]);
             }
             active = true;
@@ -64,11 +67,11 @@ public class NewsManager : Singleton<NewsManager>
             int randomPorcentaje = Random.Range(30, 71);
 
             
-            if (upOrDown == 0)
+            if (upOrDown < 30)
             {
                 crypto.currentPrice += (crypto.currentPrice * randomPorcentaje) / 100;
-                crypto.minPrice = (int)(crypto.currentPrice * 0.6f);
-                crypto.maxPrice = (int)(crypto.currentPrice * 2f);
+                crypto.minPrice = (int)(crypto.currentPrice * 0.8f);
+                crypto.maxPrice = (int)(crypto.currentPrice * 3f);
             }
             else if(upOrDown >30 && upOrDown < 70)
             {
@@ -78,6 +81,7 @@ public class NewsManager : Singleton<NewsManager>
             }else if (upOrDown > 70)
             {
                 HackManager.Instance.PrepareHackAttack();
+                AudioSource.PlayClipAtPoint(Audios.Instance.sonidoHackers, transform.position);
             }
 
 

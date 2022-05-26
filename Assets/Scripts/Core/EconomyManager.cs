@@ -37,23 +37,25 @@ public class EconomyManager : Singleton<EconomyManager>
     public Action<int> OnDebtChange;
     public Action<int> OnCashChange;
 
+    public Action OnFinishGame;
     // Start is called before the first frame update
     void Start()
     {
         priceChanger = GetComponent<CryptoPriceChanger>();
         StartGame();
     }
-    
-    
 
     void StartGame()
     {
+        InGameUIManager.Instance.Initialize();
+        priceChanger.Initialize();
         currentDay = 1;
-        OnDayChange?.Invoke(currentDay);
+
         currentPlayerCash = startinPlayerCash;
         currentPlayerDebt = startingPlayerDebt;
         OnCashChange?.Invoke(currentPlayerCash);
         OnDebtChange?.Invoke(currentPlayerDebt);
+        OnDayChange?.Invoke(currentDay);
         UpdateCryptoHolders();
     }
 
@@ -61,7 +63,6 @@ public class EconomyManager : Singleton<EconomyManager>
     {
         for (int i = 0; i < priceChanger.cryptos.Length; i++)
         {
-            //Asignar posteriormente el inventario del jugador
             InGameUIManager.Instance.UpdateHolder(i,priceChanger.cryptos[i].Name,PlayerInventory.Instance.GetAmount(priceChanger.cryptos[i].Name),
                 priceChanger.cryptos[i].currentPrice);
         }
@@ -94,6 +95,11 @@ public class EconomyManager : Singleton<EconomyManager>
             ModifyPlayerDept((currentPlayerDebt * dailyTaxes) / 100);
         }
         UpdateCryptoHolders();
+
+        if (currentDay > 30)
+        {
+            OnFinishGame?.Invoke();
+        }
     }
 
     public int GetPlayerAmountCapacity(int price)
@@ -106,5 +112,10 @@ public class EconomyManager : Singleton<EconomyManager>
     {
         priceChanger.NewsCryptoValueChange(crypto);
         UpdateCryptoHolders();
+    }
+
+    public int GetPlayerTotal()
+    {
+        return currentPlayerCash + BankManager.Instance.playerDeposit - currentPlayerDebt;
     }
 }

@@ -89,7 +89,7 @@ public class BuyAndSellManager : Singleton<BuyAndSellManager>
         }
         EconomyManager.Instance.ModifyPlayerCash(-(int)(activeCryptoPrice* buyAmountSlider.value));
         EconomyManager.Instance.UpdateCryptoHolders();
-
+        AudioSource.PlayClipAtPoint(Audios.Instance.sonidoCompra, transform.position);
         CloseWindow();
     }
 
@@ -97,11 +97,12 @@ public class BuyAndSellManager : Singleton<BuyAndSellManager>
     {
         for (int i = 0; i < sellAmountSlider.value; i++)
         {
+            Debug.Log(activeCryptoName);
             PlayerInventory.Instance.RemoveCrypto(activeCryptoName);
         }
         EconomyManager.Instance.ModifyPlayerCash((int)(activeCryptoPrice*sellAmountSlider.value));
         EconomyManager.Instance.UpdateCryptoHolders();
-
+        AudioSource.PlayClipAtPoint(Audios.Instance.sonidoVenta, transform.position);
         CloseWindow();
     }
     

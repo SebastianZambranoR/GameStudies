@@ -4,9 +4,9 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class BankManager : MonoBehaviour
+public class BankManager : Singleton<BankManager>
 {
-    private int playerDeposit;
+    public int playerDeposit;
 
     [SerializeField] private GameObject backGround;
     [SerializeField] private GameObject centralPanel;

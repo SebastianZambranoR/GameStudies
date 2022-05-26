@@ -15,10 +15,12 @@ public class PlayerInventory : Singleton<PlayerInventory>
 
     public void RemoveCrypto(string crypto)
     {
-        for (int i = inventory.Count-1; i == 0; i--)
+        for (int i = inventory.Count - 1; i >= 0; i--)
         {
+            Debug.Log(inventory[i].Name);
             if (inventory[i].Name == crypto)
             {
+                Debug.Log("removido");
                 inventory.Remove(inventory[i]);
                 break;
             }
