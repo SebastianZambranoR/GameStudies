@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Zambra Coin
   m_EditorClassIdentifier: 
   Name: Zambra Coin
-  currentPrice: 1049
-  minPrice: 629
-  maxPrice: 1783
+  currentPrice: 10946
+  minPrice: 8756
+  maxPrice: 32838

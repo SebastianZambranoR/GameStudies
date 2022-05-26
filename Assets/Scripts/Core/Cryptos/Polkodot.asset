@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Polkodot
   m_EditorClassIdentifier: 
   Name: Polkodot
-  currentPrice: 63
-  minPrice: 54
-  maxPrice: 153
+  currentPrice: 170
+  minPrice: 200
+  maxPrice: 400
